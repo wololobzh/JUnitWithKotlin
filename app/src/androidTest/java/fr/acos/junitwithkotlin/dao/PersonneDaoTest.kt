@@ -18,8 +18,8 @@ import org.junit.runner.RunWith
 class PersonneDaoTest
 {
 
-    private var mUserDao: PersonneDao? = null
-    private var mDb: MaBaseDeDonnees? = null
+    private var personneDao: PersonneDao? = null
+    private var bdd: MaBaseDeDonnees? = null
 
     /**
      * Fonction exécutée avant tout les tests.
@@ -28,8 +28,8 @@ class PersonneDaoTest
     fun createDb()
     {
         val context = InstrumentationRegistry.getTargetContext()
-        mDb = Room.inMemoryDatabaseBuilder(context, MaBaseDeDonnees::class.java!!).build()
-        mUserDao = mDb!!.personneDao()
+        bdd = Room.inMemoryDatabaseBuilder(context, MaBaseDeDonnees::class.java!!).build()
+        personneDao = bdd!!.personneDao()
     }
 
     /**
@@ -37,7 +37,7 @@ class PersonneDaoTest
      */
     @After
     fun closeDb() {
-        mDb!!.close()
+        bdd!!.close()
     }
 
     /**
@@ -47,8 +47,8 @@ class PersonneDaoTest
     fun insertAndGetByNameTest()
     {
         val user = Personne(0,"Cosson","Barbara")
-        mUserDao!!.insertAll(user)
-        val byName = mUserDao!!.get("Cosson")
+        personneDao!!.insertAll(user)
+        val byName = personneDao!!.get("Cosson")
         assertEquals(user.nom, byName.nom)
         assertEquals(user.prenom, byName.prenom)
     }
